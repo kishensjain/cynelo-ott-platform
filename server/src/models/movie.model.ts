@@ -1,7 +1,6 @@
 import mongoose, { type Types } from "mongoose";
 
 export interface IReview {
-  _id?: Types.ObjectId;
   name: string;
   rating: number;
   comment: string;
@@ -110,3 +109,33 @@ movieSchema.index({ createdAt: -1 });
 
 const Movie = mongoose.model("Movie", movieSchema);
 export default Movie;
+
+/*
+  MongoDB Indexes:
+
+  1. Text Index
+     - Enables text search across movie name, detail, and cast.
+     - Useful for searching movies by title, description, or actor name.
+
+  2. Genre + Year Compound Index
+     - Indexes movies by genre and then by release year.
+     - genre: 1  → ascending
+     - year: -1  → descending
+     - Useful for queries like "get Action movies, newest first."
+
+  3. Rating + Number of Reviews Compound Index
+     - Indexes movies primarily by rating and then by number of reviews.
+     - rating: -1       → highest-rated first
+     - numReviews: -1   → most-reviewed first when ratings are equal
+     - Useful for queries like "get top-rated movies."
+
+  4. Created At Index
+     - Indexes movies by their creation time.
+     - createdAt: -1 → newest movies first
+     - Useful for queries like "get recently added movies."
+
+  Note:
+  Indexes don't define what data is allowed.
+  They create optimized data structures that MongoDB can use
+  to make certain queries and sorting operations faster.
+*/
