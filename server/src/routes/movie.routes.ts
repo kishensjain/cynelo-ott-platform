@@ -19,7 +19,7 @@ import {
   authorizeAdmin,
 } from "../middlewares/auth.middleware.js";
 
-import {checkId} from "../middlewares/checkId.middleware.js";
+import checkId from "../middlewares/checkId.middleware.js";
 
 const router = express.Router();
 
