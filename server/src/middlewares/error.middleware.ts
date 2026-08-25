@@ -12,7 +12,7 @@ export const notFound = (req: Request, res: Response) => {
     .json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
 };
 
-const errorHandler = (
+export const errorHandler = (
   err: AppError,
   req: Request,
   res: Response,
