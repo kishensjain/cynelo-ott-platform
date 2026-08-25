@@ -2,7 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 
-import { connectDB } from "./config/db.js";
+import connectDB from "./config/db.js";
 
 dotenv.config({debug: true});
 
