@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import type { Response } from "express";
 import type { Types } from "mongoose";
 
-export const generateToken = (res: Response, userId: Types.ObjectId) => {
+const generateToken = (res: Response, userId: Types.ObjectId) => {
   const secret = process.env.JWT_SECRET;
   if (!secret) throw new Error("JWT_SECRET is not configured");
 
@@ -21,6 +21,8 @@ export const generateToken = (res: Response, userId: Types.ObjectId) => {
 
   return token;
 };
+
+export default generateToken;
 
 /*
 JWT Token - The actual authentication token
