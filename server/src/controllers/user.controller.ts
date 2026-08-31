@@ -3,7 +3,10 @@ import bcrypt from "bcryptjs";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import generateToken from "../utils/createToken.js";
 
-const serializeUser = (user) => ({
+import type { HydratedDocument } from "mongoose";
+import type { IUser } from "../models/user.model.js";
+
+const serializeUser = (user: HydratedDocument<IUser>) => ({
   _id: user._id,
   username: user.username,
   email: user.email,
@@ -72,6 +75,10 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 export const getCurrentUserProfile = asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
   const user = await User.findById(req.user._id);
   if (!user) {
     res.status(404);
@@ -81,6 +88,10 @@ export const getCurrentUserProfile = asyncHandler(async (req, res) => {
 });
 
 export const updateCurrentUserProfile = asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
   const user = await User.findById(req.user._id);
   if (!user) {
     res.status(404);
