@@ -23,7 +23,7 @@ export const authenticate = asyncHandler(async (req, res, next) => {
     }
 
     // attaches the authenticated user to the Express request object
-    (req as Request & { user: typeof user }).user = user;
+    req.user = user;
     next();
   } catch (error: any) {
     if (error?.statusCode === 401 || res.statusCode === 401) throw error;
@@ -33,7 +33,7 @@ export const authenticate = asyncHandler(async (req, res, next) => {
 });
 
 export const authorizeAdmin = (
-  req: Request & { user?: { isAdmin?: boolean } },
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
