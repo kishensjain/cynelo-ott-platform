@@ -12,6 +12,7 @@ export interface IReview {
 export interface IMovie {
   name: string;
   image: string;
+  imagePublicId: string;
   year: number;
   genre: Types.ObjectId;
   detail: string;
@@ -62,6 +63,10 @@ const movieSchema = new mongoose.Schema<IMovie>(
     image: {
       type: String,
       default: "",
+    },
+    imagePublicId: {
+      type: String,
+      required: true,
     },
     year: {
       type: Number,
