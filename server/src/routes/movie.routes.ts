@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "../middlewares/upload.middleware.js";
 
 import {
   createMovie,
@@ -32,13 +33,20 @@ router.get("/random-movies", getRandomMovies);
 
 router.post("/:id/reviews", authenticate, checkId, movieReview);
 
-router.post("/create-movie", authenticate, authorizeAdmin, createMovie);
+router.post(
+  "/create-movie",
+  authenticate,
+  authorizeAdmin,
+  upload.single("image"),
+  createMovie,
+);
 
 router.put(
   "/update-movie/:id",
   authenticate,
   authorizeAdmin,
   checkId,
+  upload.single("image"),
   updateMovie,
 );
 
