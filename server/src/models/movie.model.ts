@@ -1,6 +1,7 @@
 import mongoose, { type Types } from "mongoose";
 
 export interface IReview {
+  _id?: Types.ObjectId
   name: string;
   rating: number;
   comment: string;

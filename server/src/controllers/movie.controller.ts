@@ -37,6 +37,8 @@ export const createMovie = asyncHandler(async (req, res) => {
   }
 
   const result = await cloudinary.uploader.upload(
+    // std data URI: data:[type];[encoding],[data]
+    // Cloudinary can accept a Data URI, which looks like: data:image/jpeg;base64,/9j/4AAQSkZJRg...
     `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
     {
       folder: "movies",
@@ -142,13 +144,25 @@ export const updateMovie = asyncHandler(async (req, res) => {
     throw new Error("Movie not found");
   }
 
-  const allowed = ["name", "year", "genre", "detail", "cast"];
+  if (req.body.name !== undefined) {
+    movie.name = req.body.name;
+  }
 
-  allowed.forEach((field) => {
-    if (req.body[field] !== undefined) {
-      movie[field] = req.body[field];
-    }
-  });
+  if (req.body.year !== undefined) {
+    movie.year = req.body.year;
+  }
+
+  if (req.body.genre !== undefined) {
+    movie.genre = req.body.genre;
+  }
+
+  if (req.body.detail !== undefined) {
+    movie.detail = req.body.detail;
+  }
+
+  if (req.body.cast !== undefined) {
+    movie.cast = req.body.cast;
+  }
 
   if (req.body.genre !== undefined) {
     const genreExists = await Genre.exists({ _id: req.body.genre });
@@ -202,7 +216,7 @@ export const movieReview = asyncHandler(async (req, res) => {
 
   if (
     movie.reviews.some(
-      (review) => review.user.toString() === req.user._id.toString(),
+      (review) => review.user.toString() === req.user!._id.toString(),
     )
   ) {
     res.status(400);
@@ -210,10 +224,10 @@ export const movieReview = asyncHandler(async (req, res) => {
   }
 
   movie.reviews.push({
-    name: req.user.username,
+    name: req.user!.username,
     rating: numericRating,
     comment: comment.trim(),
-    user: req.user._id,
+    user: req.user!._id,
   });
 
   movie.numReviews = movie.reviews.length;
@@ -260,7 +274,7 @@ export const deleteComment = asyncHandler(async (req, res) => {
   }
 
   const reviewIndex = movie.reviews.findIndex(
-    (review) => review._id.toString() === reviewId,
+    (review) => review._id!.toString() === reviewId,
   );
 
   if (reviewIndex === -1) {
