@@ -263,7 +263,7 @@ export const deleteMovie = asyncHandler(async (req, res) => {
   });
 });
 
-export const deleteComment = asyncHandler(async (req, res) => {
+export const deleteReview = asyncHandler(async (req, res) => {
   const { movieId, reviewId } = req.body;
 
   const movie = await Movie.findById(movieId);

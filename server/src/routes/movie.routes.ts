@@ -9,7 +9,7 @@ import {
   updateMovie,
   movieReview,
   deleteMovie,
-  deleteComment,
+  deleteReview,
   getNewMovies,
   getTopMovies,
   getRandomMovies,
@@ -34,7 +34,7 @@ router.get("/random-movies", getRandomMovies);
 router.post("/:id/reviews", authenticate, checkId, movieReview);
 
 router.post(
-  "/create-movie",
+  "/",
   authenticate,
   authorizeAdmin,
   upload.single("image"),
@@ -42,7 +42,7 @@ router.post(
 );
 
 router.put(
-  "/update-movie/:id",
+  "/:id",
   authenticate,
   authorizeAdmin,
   checkId,
@@ -50,14 +50,8 @@ router.put(
   updateMovie,
 );
 
-router.delete(
-  "/delete-movie/:id",
-  authenticate,
-  authorizeAdmin,
-  checkId,
-  deleteMovie,
-);
+router.delete("/:id", authenticate, authorizeAdmin, checkId, deleteMovie);
 
-router.delete("/delete-comment", authenticate, authorizeAdmin, deleteComment);
+router.delete("/delete-review", authenticate, authorizeAdmin, deleteReview);
 
 export default router;
