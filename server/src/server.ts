@@ -11,7 +11,7 @@ import movieRoutes from "./routes/movie.routes.js";
 import genreRoutes from "./routes/genre.routes.js";
 import { errorHandler, notFound } from "./middlewares/error.middleware.js";
 
-dotenv.config({debug: true});
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
