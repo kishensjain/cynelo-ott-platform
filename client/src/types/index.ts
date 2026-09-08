@@ -50,3 +50,11 @@ export interface User {
 export interface ApiError {
   message: string;
 }
+
+export interface SearchParams {
+  query?: string;
+  genre?: string;
+  year?: number | string;
+  page?: number;
+  limit?: number;
+}

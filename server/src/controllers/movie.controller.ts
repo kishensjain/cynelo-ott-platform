@@ -282,6 +282,13 @@ export const deleteReview = asyncHandler(async (req, res) => {
     throw new Error("Review not found");
   }
 
+  const review = movie.reviews[reviewIndex];
+
+  if (review.user.toString() !== req.user!._id.toString()) {
+    res.status(403);
+    throw new Error("You can only delete your own review");
+  }
+
   movie.reviews.splice(reviewIndex, 1);
 
   movie.numReviews = movie.reviews.length;

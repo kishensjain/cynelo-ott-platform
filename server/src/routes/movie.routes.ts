@@ -52,6 +52,6 @@ router.put(
 
 router.delete("/:id", authenticate, authorizeAdmin, checkId, deleteMovie);
 
-router.delete("/delete-review", authenticate, authorizeAdmin, deleteReview);
+router.delete("/delete-review", authenticate, deleteReview);
 
 export default router;
