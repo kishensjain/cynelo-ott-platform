@@ -11,8 +11,8 @@ const api = axios.create({
 export function errorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     return (
-      error.response?.data?.message ||
-      error.message ||
+      error.response?.data?.message || // msg from backend
+      error.message || // msg from axios
       "Something went wrong. Please try again."
     );
   }
