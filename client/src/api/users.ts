@@ -1,7 +1,7 @@
 import api from "@/lib/api";
 import type { User } from "@/types";
 
-export const userApi = {
+export const usersApi = {
   register: (username: string, email: string, password: string) =>
     api
       .post<User>("/users", { username, email, password })
