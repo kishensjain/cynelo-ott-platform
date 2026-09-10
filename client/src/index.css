@@ -260,4 +260,31 @@ code {
   body {
     @apply bg-background text-foreground;}
   html {
-    @apply font-sans;}}
+    @apply font-sans;}
+}
+
+html {
+  color-scheme: dark;
+}
+body {
+  background-color: #020617; /* slate-950 */
+}
+
+.row-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.row-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.row-scroll::-webkit-scrollbar-thumb {
+  background: #475569; /* slate-600 */
+  border-radius: 999px;
+}
+
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid #2563eb; /* blue-600 */
+  outline-offset: 2px;
+}
