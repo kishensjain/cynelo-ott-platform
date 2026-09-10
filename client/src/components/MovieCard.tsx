@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 import type { Movie } from "@/types";
 import { cn } from "@/lib/utils";
 
-export function MovieCard({
+function MovieCard({
   movie,
   className,
 }: {
@@ -51,3 +51,5 @@ export function MovieCard({
     </Link>
   );
 }
+
+export default MovieCard;
