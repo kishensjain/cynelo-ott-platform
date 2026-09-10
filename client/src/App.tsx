@@ -1,12 +1,14 @@
-import { BrowserRouter, Routes } from "react-router";
+import { Route, Routes } from "react-router";
+import Layout from "@/components/Layout";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes></Routes>
-      </BrowserRouter>
-    </>
+    <Routes>
+      {/* Layout is the common outer structure */}
+      <Route element={<Layout />}>
+      
+      </Route>
+    </Routes>
   );
 }
 
