@@ -9,7 +9,7 @@ interface MovieRowProps {
   loading?: boolean;
 }
 
-export function MovieRow({ title, subtitle, movies, loading }: MovieRowProps) {
+function MovieRow({ title, subtitle, movies, loading }: MovieRowProps) {
   if (!loading && (!movies || movies.length === 0)) return null;
 
   return (
@@ -34,3 +34,5 @@ export function MovieRow({ title, subtitle, movies, loading }: MovieRowProps) {
     </section>
   );
 }
+
+export default MovieRow;
