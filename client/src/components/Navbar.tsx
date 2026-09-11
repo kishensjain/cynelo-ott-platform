@@ -103,13 +103,18 @@ function Navbar() {
         ) : (
           <div className="flex shrink-0 items-center gap-2">
             <Button
-              variant="ghost"
+              variant="secondary"
+              className="cursor-pointer"
               size="sm"
               onClick={() => navigate("/login")}
             >
               Sign in
             </Button>
-            <Button size="sm" onClick={() => navigate("/register")}>
+            <Button
+              className="cursor-pointer"
+              size="sm"
+              onClick={() => navigate("/register")}
+            >
               Join
             </Button>
           </div>
