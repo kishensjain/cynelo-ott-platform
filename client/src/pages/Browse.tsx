@@ -98,6 +98,8 @@ function Browse() {
             updateParam("genre", value === "all" ? "" : value);
           }}
         >
+          // SelectTrigger = the clickable dropdown box
+          // SelectValue = what is displayed inside that box
           <SelectTrigger>
             <SelectValue placeholder="All genres">
               {genre === "" || genre === "all"
@@ -105,7 +107,9 @@ function Browse() {
                 : (genres.find((g) => g._id === genre)?.name ?? "All genres")}
             </SelectValue>
           </SelectTrigger>
-
+          
+          // SelectContent = dropdown list that appears after you click the SelectTrigger
+          // SelectItem = each dropdown list item
           <SelectContent>
             <SelectItem value="all">All genres</SelectItem>
 
