@@ -50,8 +50,8 @@ router.put(
   updateMovie,
 );
 
-router.delete("/:id", authenticate, authorizeAdmin, checkId, deleteMovie);
-
 router.delete("/delete-review", authenticate, deleteReview);
+
+router.delete("/:id", authenticate, authorizeAdmin, checkId, deleteMovie);
 
 export default router;

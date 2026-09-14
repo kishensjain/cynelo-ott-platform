@@ -312,7 +312,10 @@ export const deleteReview = asyncHandler(async (req, res) => {
 
   const review = movie.reviews[reviewIndex];
 
-  if (review.user.toString() !== req.user!._id.toString()) {
+  if (
+    !req.user?.isAdmin &&
+    review.user.toString() !== req.user!._id.toString()
+  ) {
     res.status(403);
     throw new Error("You can only delete your own review");
   }
