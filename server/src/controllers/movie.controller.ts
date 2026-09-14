@@ -17,7 +17,7 @@ const normalizePagination = (req: Request) => {
 };
 
 export const createMovie = asyncHandler(async (req, res) => {
-  const { name, year, genre, detail, cast = [] } = req.body;
+  const { name, year, genre, detail } = req.body;
 
   if (!name || !year || !genre || !detail) {
     res.status(400);
@@ -27,6 +27,21 @@ export const createMovie = asyncHandler(async (req, res) => {
   if (!req.file) {
     res.status(400);
     throw new Error("Movie image is required");
+  }
+
+  let parsedCast: string[] = [];
+
+  if (req.body.cast) {
+    try {
+      parsedCast = JSON.parse(req.body.cast);
+      if (!Array.isArray(parsedCast)) {
+        res.status(400);
+        throw new Error("Cast must be an array");
+      }
+    } catch {
+      res.status(400);
+      throw new Error("Invalid cast format");
+    }
   }
 
   const genreExists = await Genre.findById(genre);
@@ -52,7 +67,7 @@ export const createMovie = asyncHandler(async (req, res) => {
     year,
     genre,
     detail,
-    cast,
+    cast: parsedCast,
   });
 
   res.status(201).json(movie);
@@ -160,8 +175,21 @@ export const updateMovie = asyncHandler(async (req, res) => {
     movie.detail = req.body.detail;
   }
 
+  let parsedCast: string[] = [];
   if (req.body.cast !== undefined) {
-    movie.cast = req.body.cast;
+    try {
+      parsedCast = JSON.parse(req.body.cast);
+
+      if (!Array.isArray(parsedCast)) {
+        res.status(400);
+        throw new Error("Cast must be an array");
+      }
+
+      movie.cast = parsedCast;
+    } catch {
+      res.status(400);
+      throw new Error("Invalid cast format");
+    }
   }
 
   if (req.body.genre !== undefined) {
