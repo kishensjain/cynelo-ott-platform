@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import Home from "@/pages/Home";
 import Browse from "@/pages/Browse";
 import NotFound from "@/pages/NotFound";
+import MovieDetails from "@/pages/MovieDetails";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route element={<Layout />}>
       <Route index element={<Home />} />
       <Route path='browse' element={<Browse />} />
+      <Route path="movies/:id" element={<MovieDetails />} />
 
       <Route path="*" element={<NotFound />} />
       </Route>
