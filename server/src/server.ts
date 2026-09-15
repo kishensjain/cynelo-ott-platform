@@ -15,7 +15,7 @@ import { errorHandler, notFound } from "./middlewares/error.middleware.js";
 dotenv.config();
 
 const app = express();
-// const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5001;
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
 // Disable the X-Powered-By header
@@ -55,9 +55,9 @@ app.use(errorHandler);
 const startServer = async (): Promise<void> => {
   await connectDB();
 
-  // app.listen(PORT, () => {
-  //   console.log(`Cynelo API running on http://localhost:${PORT}`);
-  // });
+  app.listen(PORT, () => {
+    console.log(`Cynelo API running on http://localhost:${PORT}`);
+  });
 };
 
 startServer();
