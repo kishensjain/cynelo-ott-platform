@@ -46,7 +46,8 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/v1/users", userRoutes);
-app.use("/api/v1/subscriptions", subscriptionRoutes);
+app.use("/api/v1", subscriptionRoutes);
+app.use("/api", subscriptionRoutes);
 app.use("/api/v1/genre", genreRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use(notFound);
