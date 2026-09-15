@@ -8,13 +8,23 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export function Profile() {
-  const { user, setUser } = useAuthStore();
+  const { user, setUser, unsubscribe } = useAuthStore();
   const [username, setUsername] = useState(user?.username || "");
   const [email, setEmail] = useState(user?.email || "");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
 
   if (!user) return null;
 
@@ -38,6 +48,19 @@ export function Profile() {
       toast.error(errorMessage(error));
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const cancelSubscription = async () => {
+    setCancelling(true);
+    try {
+      await unsubscribe();
+      toast.success("Subscription cancelled");
+      setConfirmCancel(false);
+    } catch (error) {
+      toast.error(errorMessage(error));
+    } finally {
+      setCancelling(false);
     }
   };
 
@@ -93,6 +116,52 @@ export function Profile() {
           {submitting ? "Saving..." : "Save changes"}
         </Button>
       </form>
+
+      {user.isSubscribed && (
+        <div className="mt-10 border-t border-white/10 pt-6">
+          <p className="text-sm font-medium text-slate-200">Subscription</p>
+          <p className="mt-1 text-sm text-slate-400">
+            Your Cynelo subscription is active.
+          </p>
+          <Button
+            type="button"
+            variant="destructive"
+            className="mt-4"
+            disabled={cancelling}
+            onClick={() => setConfirmCancel(true)}
+          >
+            {cancelling ? "Cancelling..." : "Cancel subscription"}
+          </Button>
+        </div>
+      )}
+
+      <Dialog open={confirmCancel} onOpenChange={setConfirmCancel}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Cancel your subscription?</DialogTitle>
+            <DialogDescription>
+              You will lose access to subscriber-only movie details and reviews.
+              You can subscribe again later.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setConfirmCancel(false)}
+              disabled={cancelling}
+            >
+              Keep subscription
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={cancelSubscription}
+              disabled={cancelling}
+            >
+              {cancelling ? "Cancelling..." : "Yes, cancel"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

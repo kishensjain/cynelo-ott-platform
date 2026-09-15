@@ -16,7 +16,7 @@ function Layout() {
             <span className="font-semibold text-sm">Cynelo</span>
           </div>
           <p className="max-w-md text-xs text-slate-500">
-            Movie metadata and trailers are used for demonstration purposes.
+            Movie metadata like title, description, year, genre, cast,image and reviews for demonstration purposes.
             Full-length copyrighted films are not hosted or distributed here.
           </p>
         </div>

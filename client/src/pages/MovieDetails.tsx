@@ -149,10 +149,11 @@ function MovieDetails() {
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-100">
             Unlock the Cynelo catalog
           </h1>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-slate-400">
-            Subscribe to view movie details, reviews, and the rest of the
-            subscriber experience.
-          </p>
+          <div className="mt-4 flex w-full justify-center">
+            <p className="max-w-sm text-center text-sm leading-6 text-slate-400">
+              Subscribe to unlock movie details, reviews, and exclusive content.
+            </p>
+          </div>
           <div className="mt-7 flex justify-center">
             <SubscribeButton onSubscribed={load} />
           </div>
