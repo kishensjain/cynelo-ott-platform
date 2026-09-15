@@ -7,7 +7,11 @@ import MovieDetails from "@/pages/MovieDetails";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Profile from "@/pages/Profile";
-import { ProtectedRoute } from "@/components/RouteGuard";
+import { ProtectedRoute, AdminRoute } from "@/components/RouteGuard";
+import AdminLayout from "@/pages/admin/AdminLayout";
+import AdminMovies from "@/pages/admin/AdminMovies";
+import AdminGenres from "@/pages/admin/AdminGenres";
+import MovieForm from "@/pages/admin/MovieForm";
 
 function App() {
   return (
@@ -22,6 +26,15 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="profile" element={<Profile />} />
+        </Route>
+
+        <Route path="admin" element={<AdminRoute />}>
+          <Route path="movies/new" element={<MovieForm />} />
+          <Route path="movies/:id/edit" element={<MovieForm />} />
+          <Route element={<AdminLayout />}>
+            <Route path="movies" element={<AdminMovies />} />
+            <Route path="genres" element={<AdminGenres />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />

@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "react-router";
 import { cn } from "@/lib/utils";
 
-export function AdminLayout() {
+function AdminLayout() {
   return (
     <div>
       <div className="border-b border-slate-700 bg-slate-900">
@@ -38,3 +38,5 @@ export function AdminLayout() {
     </div>
   );
 }
+
+export default AdminLayout;
