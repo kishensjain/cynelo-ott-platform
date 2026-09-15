@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 function AdminLayout() {
   return (
     <div>
-      <div className="border-b border-slate-700 bg-slate-900">
+      <div className="border-b border-white/10 bg-slate-950/35">
         <div className="mx-auto flex max-w-6xl gap-1 px-4 sm:px-6">
           <NavLink
             to="/admin/movies"
@@ -12,8 +12,8 @@ function AdminLayout() {
               cn(
                 "focus-ring border-b-2 px-1 py-4 text-sm font-medium",
                 isActive
-                  ? "border-blue-600 text-slate-100"
-                  : "border-transparent text-slate-400 hover:text-slate-300",
+                  ? "border-amber-300 text-slate-100"
+                  : "border-transparent text-slate-400 hover:text-amber-200",
               )
             }
           >
@@ -25,8 +25,8 @@ function AdminLayout() {
               cn(
                 "focus-ring border-b-2 px-1 py-4 text-sm font-medium",
                 isActive
-                  ? "border-blue-600 text-slate-100"
-                  : "border-transparent text-slate-400 hover:text-slate-300",
+                  ? "border-amber-300 text-slate-100"
+                  : "border-transparent text-slate-400 hover:text-amber-200",
               )
             }
           >

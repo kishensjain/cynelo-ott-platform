@@ -42,21 +42,21 @@ function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-700 bg-slate-950/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-[#090b10]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <Link
           to="/"
           className="focus-ring flex shrink-0 items-center gap-2 rounded-sm"
         >
-          <Film className="h-6 w-6 text-blue-600" />
+          <Film className="h-6 w-6 text-amber-300" />
           <span className="font-semibold text-xl tracking-tight text-slate-100">
             Cynelo
           </span>
         </Link>
 
-        <nav className="hidden shrink-0 items-center gap-4 font-mono text-xs uppercase tracking-wide text-slate-400 md:flex">
+        <nav className="hidden shrink-0 items-center gap-4 text-sm text-slate-400 md:flex">
           <Link
-            className="focus-ring rounded-sm hover:text-slate-100"
+            className="focus-ring rounded-sm transition-colors hover:text-amber-200"
             to="/browse"
           >
             Browse

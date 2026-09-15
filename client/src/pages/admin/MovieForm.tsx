@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import type { Genre } from "@/types";
 
 function MovieForm() {
@@ -123,22 +124,27 @@ function MovieForm() {
         Back to admin
       </Link>
 
-      <div className="mt-8">
-        <h1 className="font-semibold text-3xl text-slate-100">
+      <div className="mt-8 border-b border-white/10 pb-7">
+        <p className="text-xs font-medium uppercase tracking-[0.22em] text-amber-300">
+          Catalog management
+        </p>
+        <h1 className="mt-3 font-semibold text-3xl tracking-tight text-slate-100 sm:text-4xl">
           {isEdit ? "Edit movie" : "Add movie"}
         </h1>
 
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400">
           {isEdit
             ? "Update the movie information below."
             : "Add a new movie to your collection."}
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-6">
+      <Card className="mt-8 border-white/10 bg-slate-900/55 shadow-2xl shadow-black/10">
+        <CardContent className="p-6 sm:p-8">
+      <form onSubmit={onSubmit} className="space-y-7">
         {/* Title */}
         <div>
-          <Label htmlFor="name" className="mb-1">
+          <Label htmlFor="name" className="mb-2 text-slate-300">
             Title
           </Label>
           <Input
@@ -146,6 +152,7 @@ function MovieForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Movie title"
+            className="h-10 bg-slate-950/40"
             required
           />
         </div>
@@ -153,7 +160,7 @@ function MovieForm() {
         {/* Year + Genre */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <Label htmlFor="year" className="mb-1">
+            <Label htmlFor="year" className="mb-2 text-slate-300">
               Year
             </Label>
             <Input
@@ -164,12 +171,13 @@ function MovieForm() {
               value={year}
               onChange={(e) => setYear(e.target.value)}
               placeholder="2026"
+              className="h-10 bg-slate-950/40"
               required
             />
           </div>
 
           <div>
-            <Label htmlFor="genre" className="mb-1">
+            <Label htmlFor="genre" className="mb-2 text-slate-300">
               Genre
             </Label>
 
@@ -180,7 +188,7 @@ function MovieForm() {
                 setGenre(value);
               }}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="h-10 w-full bg-slate-950/40">
                 <SelectValue placeholder="Select genre" />
               </SelectTrigger>
 
@@ -197,7 +205,7 @@ function MovieForm() {
 
         {/* Synopsis */}
         <div>
-          <Label htmlFor="detail" className="mb-1">
+          <Label htmlFor="detail" className="mb-2 text-slate-300">
             Synopsis
           </Label>
           <Textarea
@@ -206,13 +214,14 @@ function MovieForm() {
             value={detail}
             onChange={(e) => setDetail(e.target.value)}
             placeholder="Write a short synopsis..."
+            className="min-h-32 bg-slate-950/40"
             required
           />
         </div>
 
         {/* Cast */}
         <div>
-          <Label htmlFor="cast" className="mb-1">
+          <Label htmlFor="cast" className="mb-2 text-slate-300">
             Cast
           </Label>
           <Input
@@ -220,6 +229,7 @@ function MovieForm() {
             value={cast}
             onChange={(e) => setCast(e.target.value)}
             placeholder="Jane Doe, John Smith"
+            className="h-10 bg-slate-950/40"
           />
           <p className="mt-1.5 text-xs text-slate-500">
             Separate multiple actors with commas.
@@ -228,22 +238,22 @@ function MovieForm() {
 
         {/* Poster */}
         <div>
-          <Label htmlFor="image" className="mb-1">
+          <Label htmlFor="image" className="mb-2 text-slate-300">
             Poster image
           </Label>
 
-          <div className="mt-2 flex items-center gap-4">
+          <div className="mt-2 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             {preview && (
               <img
                 src={preview}
                 alt="Poster preview"
-                className="h-28 w-20 rounded-md border border-slate-700 object-cover"
+                className="aspect-2/3 h-auto w-28 rounded-lg border border-white/10 object-cover shadow-xl"
               />
             )}
 
             <label
               htmlFor="image"
-              className="focus-ring inline-flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-slate-600 px-4 py-3 text-sm text-slate-400 transition-colors hover:border-slate-500 hover:bg-slate-800 hover:text-slate-200"
+              className="focus-ring inline-flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-slate-600 px-4 py-3 text-sm text-slate-400 transition-colors hover:border-amber-300/70 hover:bg-amber-300/5 hover:text-amber-100"
             >
               <UploadCloud className="h-4 w-4" />
               {file ? file.name : "Choose file"}
@@ -259,14 +269,14 @@ function MovieForm() {
           </div>
 
           {!isEdit && (
-            <p className="mt-1.5 text-xs text-slate-500">
+            <p className="mt-3 text-xs leading-5 text-slate-500">
               A poster image is required.
             </p>
           )}
         </div>
 
         {/* Submit */}
-        <Button type="submit" disabled={submitting} className="w-full">
+        <Button type="submit" disabled={submitting} size="lg" className="h-11 w-full shadow-lg shadow-amber-950/20">
           {submitting
             ? isEdit
               ? "Saving..."
@@ -276,6 +286,8 @@ function MovieForm() {
               : "Add movie"}
         </Button>
       </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -18,7 +18,7 @@ function MovieCard({
       to={`/movies/${movie._id}`}
       className={cn("focus-ring group block w-40 shrink-0 sm:w-44", className)}
     >
-      <div className="relative aspect-2/3 overflow-hidden rounded-md border border-slate-700 bg-slate-800">
+      <div className="relative aspect-2/3 overflow-hidden rounded-xl border border-white/10 bg-slate-800 shadow-lg shadow-black/20 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-amber-300/50 group-hover:shadow-amber-950/20">
         {movie.image ? (
           <img
             src={movie.image}
@@ -33,14 +33,14 @@ function MovieCard({
         )}
         <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/0 to-slate-950/0 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
         {movie.rating > 0 && (
-          <div className="absolute right-2 top-2 flex items-center gap-1 rounded-sm bg-slate-950/80 px-1.5 py-0.5 font-mono text-xs text-yellow-400">
+          <div className="absolute right-2 top-2 flex items-center gap-1 rounded-md border border-white/10 bg-slate-950/80 px-2 py-1 font-mono text-xs text-amber-300 backdrop-blur-sm">
             <Star size={11} className="fill-yellow-400 text-yellow-400" />
             {movie.rating.toFixed(1)}
           </div>
         )}
       </div>
       <div className="mt-2">
-        <p className="line-clamp-1 text-sm font-medium text-slate-100">
+        <p className="line-clamp-1 text-sm font-medium text-slate-100 transition-colors group-hover:text-amber-200">
           {movie.name}
         </p>
         <p className="font-mono text-xs text-slate-400">

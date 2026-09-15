@@ -16,7 +16,7 @@ import {
 import { EmptyState } from "@/components/Common";
 import type { Genre } from "@/types";
 
-export function AdminGenres() {
+function AdminGenres() {
   const [genres, setGenres] = useState<Genre[]>();
   const [newName, setNewName] = useState("");
   const [creating, setCreating] = useState(false);
@@ -197,3 +197,5 @@ export function AdminGenres() {
     </div>
   );
 }
+
+export default AdminGenres

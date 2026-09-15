@@ -76,20 +76,29 @@ function Browse() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <h1 className="font-semibold text-3xl text-slate-100">Browse</h1>
-      <p className="mt-1 text-sm text-slate-400">
+    <div className="mx-auto w-full max-w-[1600px] px-5 py-10 sm:px-8 lg:px-12 lg:py-14">
+      <div className="flex flex-col gap-3 border-b border-white/10 pb-8 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.24em] text-amber-300">
+            The catalog
+          </p>
+          <h1 className="mt-3 font-semibold text-4xl tracking-tight text-slate-100 sm:text-5xl">
+            Browse
+          </h1>
+        </div>
+        <p className="text-sm text-slate-400 sm:pb-1">
         {loading
           ? "Searching…"
           : `${total} title${total === 1 ? "" : "s"} found`}
-      </p>
+        </p>
+      </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-4">
+      <div className="mt-8 grid grid-cols-1 gap-3 rounded-xl border border-white/10 bg-slate-900/35 p-3 sm:grid-cols-4 lg:grid-cols-[minmax(0,1fr)_12rem_12rem]">
         <Input
           value={query}
           onChange={(e) => updateParam("query", e.target.value)}
           placeholder="Search titles, cast, plot…"
-          className="sm:col-span-2"
+          className="h-10 bg-slate-950/50 sm:col-span-2 lg:col-span-1"
         />
         <Select
           value={genre}
@@ -100,7 +109,7 @@ function Browse() {
         >
           {/* SelectTrigger = the clickable dropdown box
           SelectValue = what is displayed inside that box */}
-          <SelectTrigger>
+          <SelectTrigger className="h-10 w-full bg-slate-950/50">
             <SelectValue placeholder="All genres">
               {genre === "" || genre === "all"
                 ? "All genres"
@@ -127,7 +136,7 @@ function Browse() {
             updateParam("year", value === "all" ? "" : value);
           }}
         >
-          <SelectTrigger>
+          <SelectTrigger className="h-10 w-full bg-slate-950/50">
             <SelectValue placeholder="All years" />
           </SelectTrigger>
 
@@ -143,7 +152,7 @@ function Browse() {
         </Select>
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 lg:grid-cols-6">
+      <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10">
         {loading
           ? Array.from({ length: 12 }).map((_, i) => (
               <div key={i}>

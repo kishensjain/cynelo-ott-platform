@@ -9,10 +9,10 @@ function Layout() {
       <main className="flex-1">
         <Outlet />
       </main>
-      <footer className="border-t border-slate-700 py-8">
+      <footer className="border-t border-white/10 py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 text-center sm:px-6">
           <div className="flex items-center gap-2 text-slate-400">
-            <Film className="h-4 w-4 text-blue-600" />
+            <Film className="h-4 w-4 text-amber-300" />
             <span className="font-semibold text-sm">Cynelo</span>
           </div>
           <p className="max-w-md text-xs text-slate-500">
