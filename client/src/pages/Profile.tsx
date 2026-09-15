@@ -59,8 +59,9 @@ export function Profile() {
 
       <form onSubmit={onSubmit} className="mt-8 space-y-4">
         <div>
-          <Label htmlFor="username">Username</Label>
+          <Label htmlFor="username" className="mb-1">Username</Label>
           <Input
+            className="w-sm"
             id="username"
             value={username}
             maxLength={20}
@@ -68,8 +69,9 @@ export function Profile() {
           />
         </div>
         <div>
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="mb-1">Email</Label>
           <Input
+            className="w-sm"
             id="email"
             type="email"
             value={email}
@@ -77,8 +79,9 @@ export function Profile() {
           />
         </div>
         <div>
-          <Label htmlFor="password">New password</Label>
+          <Label htmlFor="password" className="mb-1 text-sm">New password</Label>
           <Input
+            className="w-sm"
             id="password"
             type="password"
             placeholder="Leave blank to keep current password"

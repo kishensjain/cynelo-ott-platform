@@ -43,8 +43,9 @@ function Login() {
 
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="mb-1">Email</Label>
           <Input
+          className="w-sm"
             id="email"
             type="email"
             required
@@ -55,8 +56,9 @@ function Login() {
           />
         </div>
         <div>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="mb-1">Password</Label>
           <Input
+          className="w-sm"
             id="password"
             type="password"
             required

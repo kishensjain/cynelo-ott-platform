@@ -45,8 +45,9 @@ function Register() {
 
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="username">Username</Label>
+          <Label htmlFor="username" className="mb-1">Username</Label>
           <Input
+          className="w-sm"
             id="username"
             required
             maxLength={20}
@@ -56,8 +57,9 @@ function Register() {
           />
         </div>
         <div>
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="mb-1">Email</Label>
           <Input
+            className="w-sm"
             id="email"
             type="email"
             required
@@ -67,8 +69,9 @@ function Register() {
           />
         </div>
         <div>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="mb-1">Password</Label>
           <Input
+            className="w-sm"
             id="password"
             type="password"
             required
