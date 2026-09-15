@@ -15,7 +15,7 @@ const generateToken = (res: Response, userId: Types.ObjectId) => {
   res.cookie("jwt", token, {
     httpOnly: true, // inaccessible to client-side JavaScript
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     maxAge: 30 * 24 * 60 * 60 * 1000,
   });
 
