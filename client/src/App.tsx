@@ -6,6 +6,8 @@ import NotFound from "@/pages/NotFound";
 import MovieDetails from "@/pages/MovieDetails";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import Profile from "@/pages/Profile";
+import { ProtectedRoute } from "@/components/RouteGuard";
 
 function App() {
   return (
@@ -17,6 +19,10 @@ function App() {
         <Route path="movies/:id" element={<MovieDetails />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="profile" element={<Profile />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Route>

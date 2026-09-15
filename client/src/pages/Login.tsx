@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate, type Location } from "react-router";
 import toast from "react-hot-toast";
 import { Film } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
