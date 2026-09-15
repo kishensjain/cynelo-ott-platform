@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { Star, Trash2, ArrowLeft } from "lucide-react";
+import { Star, Trash2, ArrowLeft, LockKeyhole } from "lucide-react";
 import { moviesApi } from "@/api/movies";
 import { errorMessage } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
@@ -12,6 +12,18 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Movie } from "@/types";
+import SubscribeButton from "@/components/SubscribeButton";
+
+const isSubscriptionError = (error: unknown) =>
+  Boolean(
+    error &&
+      typeof error === "object" &&
+      "response" in error &&
+      error.response &&
+      typeof error.response === "object" &&
+      "status" in error.response &&
+      error.response.status === 403,
+  );
 
 function MovieDetails() {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +35,7 @@ function MovieDetails() {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [subscriptionRequired, setSubscriptionRequired] = useState(false);
 
   const load = async () => {
     if (!id) return;
@@ -30,7 +43,12 @@ function MovieDetails() {
     try {
       const data = await moviesApi.getOne(id);
       setMovie(data);
+      setSubscriptionRequired(false);
     } catch (error) {
+      if (isSubscriptionError(error)) {
+        setSubscriptionRequired(true);
+        return;
+      }
       toast.error(errorMessage(error));
       navigate("/browse");
     }
@@ -41,8 +59,15 @@ function MovieDetails() {
 
     moviesApi
       .getOne(id)
-      .then(setMovie)
+      .then((data) => {
+        setMovie(data);
+        setSubscriptionRequired(false);
+      })
       .catch((error) => {
+        if (isSubscriptionError(error)) {
+          setSubscriptionRequired(true);
+          return;
+        }
         toast.error(errorMessage(error));
         navigate("/browse");
       })
@@ -106,6 +131,37 @@ function MovieDetails() {
             <Skeleton className="h-4 w-1/3" />
             <Skeleton className="h-24 w-full" />
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (subscriptionRequired) {
+    return (
+      <div className="mx-auto flex min-h-[65vh] max-w-3xl items-center justify-center px-4 py-16 sm:px-6">
+        <div className="w-full rounded-2xl border border-amber-300/20 bg-slate-900/70 p-8 text-center shadow-2xl shadow-black/20 sm:p-12">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-amber-300/20 bg-amber-300/10 text-amber-300">
+            <LockKeyhole className="h-6 w-6" />
+          </div>
+          <p className="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-amber-300">
+            Subscriber content
+          </p>
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-100">
+            Unlock the Cynelo catalog
+          </h1>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-slate-400">
+            Subscribe to view movie details, reviews, and the rest of the
+            subscriber experience.
+          </p>
+          <div className="mt-7 flex justify-center">
+            <SubscribeButton onSubscribed={load} />
+          </div>
+          <Link
+            to="/browse"
+            className="mt-5 inline-flex text-sm text-slate-500 transition-colors hover:text-slate-200"
+          >
+            Back to browse
+          </Link>
         </div>
       </div>
     );

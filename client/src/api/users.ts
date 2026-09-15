@@ -15,6 +15,16 @@ export const usersApi = {
 
   getProfile: () => api.get<User>("/users/profile").then((res) => res.data),
 
+  subscribe: () =>
+    api
+      .post<{ message: string; user: User }>("/subscribe")
+      .then((res) => res.data),
+
+  unsubscribe: () =>
+    api
+      .post<{ message: string; user: User }>("/unsubscribe")
+      .then((res) => res.data),
+
   updateProfile: (data: {
     username?: string;
     email?: string;

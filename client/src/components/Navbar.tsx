@@ -15,6 +15,7 @@ import {
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import SubscribeButton from "@/components/SubscribeButton";
 
 function Navbar() {
   const { user, logout } = useAuthStore();
@@ -76,37 +77,40 @@ function Navbar() {
         </form>
 
         {user ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger className="focus-ring rounded-full">
-              <Avatar>
-                <AvatarFallback>
-                  {user.username.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuGroup>
-                <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/profile")}>
-                  <UserIcon className="h-4 w-4" /> Profile
-                </DropdownMenuItem>
-                {user.isAdmin && (
-                  <DropdownMenuItem onClick={() => navigate("/admin/movies")}>
-                    <Shield className="h-4 w-4" /> Admin panel
+          <div className="flex shrink-0 items-center gap-3">
+            <SubscribeButton />
+            <DropdownMenu>
+              <DropdownMenuTrigger className="focus-ring rounded-full">
+                <Avatar>
+                  <AvatarFallback>
+                    {user.username.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <UserIcon className="h-4 w-4" /> Profile
                   </DropdownMenuItem>
-                )}
-              </DropdownMenuGroup>
+                  {user.isAdmin && (
+                    <DropdownMenuItem onClick={() => navigate("/admin/movies")}>
+                      <Shield className="h-4 w-4" /> Admin panel
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuGroup>
 
-              <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
 
-              <DropdownMenuGroup>
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="h-4 w-4" /> Sign out
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="h-4 w-4" /> Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         ) : (
           <div className="flex shrink-0 items-center gap-2">
             <Button

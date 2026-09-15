@@ -45,6 +45,7 @@ export interface User {
   username: string;
   email: string;
   isAdmin: boolean;
+  isSubscribed: boolean;
 }
 
 export interface ApiError {

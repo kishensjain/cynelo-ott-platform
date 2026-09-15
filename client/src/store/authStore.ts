@@ -14,6 +14,8 @@ interface AuthState {
     password: string,
   ) => Promise<void>;
   logout: () => Promise<void>;
+  subscribe: () => Promise<void>;
+  unsubscribe: () => Promise<void>;
   setUser: (user: User) => void;
 }
 
@@ -56,6 +58,24 @@ export const useAuthStore = create<AuthState>((set) => ({
       await usersApi.logout();
     } finally {
       set({ user: null });
+    }
+  },
+
+  subscribe: async () => {
+    try {
+      const { user } = await usersApi.subscribe();
+      set({ user });
+    } catch (error) {
+      throw new Error(errorMessage(error), { cause: error });
+    }
+  },
+
+  unsubscribe: async () => {
+    try {
+      const { user } = await usersApi.unsubscribe();
+      set({ user });
+    } catch (error) {
+      throw new Error(errorMessage(error), { cause: error });
     }
   },
 
