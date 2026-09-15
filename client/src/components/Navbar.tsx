@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
+  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
@@ -84,20 +85,26 @@ function Navbar() {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={() => navigate("/profile")}>
-                <UserIcon className="h-4 w-4" /> Profile
-              </DropdownMenuItem>
-              {user.isAdmin && (
-                <DropdownMenuItem onSelect={() => navigate("/admin/movies")}>
-                  <Shield className="h-4 w-4" /> Admin panel
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  <UserIcon className="h-4 w-4" /> Profile
                 </DropdownMenuItem>
-              )}
+                {user.isAdmin && (
+                  <DropdownMenuItem onClick={() => navigate("/admin/movies")}>
+                    <Shield className="h-4 w-4" /> Admin panel
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuGroup>
+
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={handleLogout}>
-                <LogOut className="h-4 w-4" /> Sign out
-              </DropdownMenuItem>
+
+              <DropdownMenuGroup>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="h-4 w-4" /> Sign out
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
