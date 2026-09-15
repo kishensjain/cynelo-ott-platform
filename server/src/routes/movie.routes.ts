@@ -18,6 +18,7 @@ import {
 import {
   authenticate,
   authorizeAdmin,
+  checkSubscription,
 } from "../middlewares/auth.middleware.js";
 
 import checkId from "../middlewares/checkId.middleware.js";
@@ -26,12 +27,24 @@ const router = express.Router();
 
 router.get("/search", searchMovies);
 router.get("/all-movies", getAllMovies);
-router.get("/specific-movie/:id", checkId, getSpecificMovie);
+router.get(
+  "/specific-movie/:id",
+  authenticate,
+  checkSubscription,
+  checkId,
+  getSpecificMovie,
+);
 router.get("/new-movies", getNewMovies);
 router.get("/top-movies", getTopMovies);
 router.get("/random-movies", getRandomMovies);
 
-router.post("/:id/reviews", authenticate, checkId, movieReview);
+router.post(
+  "/:id/reviews",
+  authenticate,
+  checkSubscription,
+  checkId,
+  movieReview,
+);
 
 router.post(
   "/",
@@ -50,7 +63,12 @@ router.put(
   updateMovie,
 );
 
-router.delete("/delete-review", authenticate, deleteReview);
+router.delete(
+  "/delete-review",
+  authenticate,
+  checkSubscription,
+  deleteReview,
+);
 
 router.delete("/:id", authenticate, authorizeAdmin, checkId, deleteMovie);
 

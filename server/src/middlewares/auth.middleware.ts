@@ -40,3 +40,12 @@ export const authorizeAdmin = (
   if (req.user?.isAdmin) return next();
   return res.status(403).json({ message: "Not authorized as an admin" });
 };
+
+export const checkSubscription = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (req.user?.isSubscribed) return next();
+  return res.status(403).json({ message: "An active subscription is required" });
+};

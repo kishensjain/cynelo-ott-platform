@@ -9,6 +9,7 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/user.routes.js";
 import movieRoutes from "./routes/movie.routes.js";
 import genreRoutes from "./routes/genre.routes.js";
+import subscriptionRoutes from "./routes/subscription.routes.js";
 import { errorHandler, notFound } from "./middlewares/error.middleware.js";
 
 dotenv.config();
@@ -45,6 +46,8 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1", subscriptionRoutes);
+app.use("/api", subscriptionRoutes);
 app.use("/api/v1/genre", genreRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use(notFound);

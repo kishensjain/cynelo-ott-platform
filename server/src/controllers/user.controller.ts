@@ -11,6 +11,7 @@ const serializeUser = (user: HydratedDocument<IUser>) => ({
   username: user.username,
   email: user.email,
   isAdmin: user.isAdmin,
+  isSubscribed: user.isSubscribed,
 });
 
 export const createUser = asyncHandler(async (req, res) => {
@@ -110,4 +111,46 @@ export const updateCurrentUserProfile = asyncHandler(async (req, res) => {
 
   const updatedUser = await user.save();
   res.json(serializeUser(updatedUser));
+});
+
+export const subscribeUser = asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 1200));
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { isSubscribed: true },
+    { new: true },
+  );
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.json({ message: "Subscription activated", user: serializeUser(user) });
+});
+
+export const unsubscribeUser = asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { isSubscribed: false },
+    { new: true },
+  );
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.json({ message: "Subscription cancelled", user: serializeUser(user) });
 });

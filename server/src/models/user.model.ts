@@ -5,6 +5,7 @@ export interface IUser {
   email: string;
   password: string;
   isAdmin: boolean;
+  isSubscribed: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -31,6 +32,11 @@ const userSchema = new mongoose.Schema<IUser>(
       trim: true,
     },
     isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isSubscribed: {
       type: Boolean,
       required: true,
       default: false,
