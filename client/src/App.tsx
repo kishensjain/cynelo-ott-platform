@@ -20,11 +20,11 @@ function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="browse" element={<Browse />} />
-        <Route path="movies/:id" element={<MovieDetails />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
         <Route element={<ProtectedRoute />}>
+          <Route path="movies/:id" element={<MovieDetails />} />
           <Route path="profile" element={<Profile />} />
         </Route>
 
