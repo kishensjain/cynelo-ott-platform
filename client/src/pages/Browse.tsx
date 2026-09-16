@@ -162,7 +162,11 @@ function Browse() {
               </div>
             ))
           : movies?.map((movie) => (
-              <MovieCard key={movie._id} movie={movie} className="w-full" />
+              <MovieCard
+                key={movie._id}
+                movie={movie}
+                className="min-w-0 w-full sm:w-full"
+              />
             ))}
       </div>
 
