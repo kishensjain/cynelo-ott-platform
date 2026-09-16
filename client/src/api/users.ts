@@ -17,12 +17,12 @@ export const usersApi = {
 
   subscribe: () =>
     api
-      .post<{ message: string; user: User }>("/subscribe")
+      .post<{ message: string; user: User }>("/subscriptions/subscribe")
       .then((res) => res.data),
 
   unsubscribe: () =>
     api
-      .post<{ message: string; user: User }>("/unsubscribe")
+      .post<{ message: string; user: User }>("/subscriptions/unsubscribe")
       .then((res) => res.data),
 
   updateProfile: (data: {
