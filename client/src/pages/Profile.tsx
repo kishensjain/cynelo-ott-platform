@@ -142,7 +142,7 @@ export function Profile() {
         {loadingLikedMovies ? (
           <p className="mt-2 text-sm text-slate-400">Loading liked movies...</p>
         ) : user.likedMovies?.some((movie) => typeof movie !== "string") ? (
-          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
             {user.likedMovies.filter((movie): movie is import("@/types").Movie => typeof movie !== "string").map((movie) => (
               <MovieCard key={movie._id} movie={movie} className="w-full" />
             ))}
