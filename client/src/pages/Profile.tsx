@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { usersApi } from "@/api/users";
 import { errorMessage } from "@/lib/api";
@@ -26,6 +26,25 @@ export function Profile() {
   const [submitting, setSubmitting] = useState(false);
   const [cancelling, setCancelling] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);
+  const [loadingLikedMovies, setLoadingLikedMovies] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    usersApi.getProfile()
+      .then((profile) => {
+        if (active) setUser(profile);
+      })
+      .catch((error) => {
+        if (active) toast.error(errorMessage(error));
+      })
+      .finally(() => {
+        if (active) setLoadingLikedMovies(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [setUser]);
 
   if (!user) return null;
 
@@ -120,7 +139,9 @@ export function Profile() {
 
       <section className="mt-10 border-t border-white/10 pt-6">
         <h2 className="font-semibold text-xl text-slate-100">Liked movies</h2>
-        {user.likedMovies?.length ? (
+        {loadingLikedMovies ? (
+          <p className="mt-2 text-sm text-slate-400">Loading liked movies...</p>
+        ) : user.likedMovies?.some((movie) => typeof movie !== "string") ? (
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
             {user.likedMovies.filter((movie): movie is import("@/types").Movie => typeof movie !== "string").map((movie) => (
               <MovieCard key={movie._id} movie={movie} className="w-full" />
