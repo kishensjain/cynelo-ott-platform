@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import MovieCard from "@/components/MovieCard";
 import {
   Dialog,
   DialogContent,
@@ -116,6 +117,19 @@ export function Profile() {
           {submitting ? "Saving..." : "Save changes"}
         </Button>
       </form>
+
+      <section className="mt-10 border-t border-white/10 pt-6">
+        <h2 className="font-semibold text-xl text-slate-100">Liked movies</h2>
+        {user.likedMovies?.length ? (
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+            {user.likedMovies.filter((movie): movie is import("@/types").Movie => typeof movie !== "string").map((movie) => (
+              <MovieCard key={movie._id} movie={movie} className="w-full" />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-2 text-sm text-slate-400">Movies you like will appear here.</p>
+        )}
+      </section>
 
       {user.isSubscribed && (
         <div className="mt-10 border-t border-white/10 pt-6">

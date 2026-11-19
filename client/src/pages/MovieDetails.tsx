@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { Star, Trash2, ArrowLeft, LockKeyhole } from "lucide-react";
+import { Star, Trash2, ArrowLeft, LockKeyhole, Heart } from "lucide-react";
 import { moviesApi } from "@/api/movies";
 import { errorMessage } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
@@ -36,6 +36,7 @@ function MovieDetails() {
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [subscriptionRequired, setSubscriptionRequired] = useState(false);
+  const [likeSubmitting, setLikeSubmitting] = useState(false);
 
   const load = async () => {
     if (!id) return;
@@ -84,6 +85,29 @@ function MovieDetails() {
   const alreadyReviewed = Boolean(
     movie && user && movie.reviews.some((r) => r.user === user._id),
   );
+  const isLiked = Boolean(user?.likedMovies?.some((liked) =>
+    typeof liked === "string" ? liked === movie?._id : liked._id === movie?._id,
+  ));
+
+  const toggleLike = async () => {
+    if (!id || !user) return;
+    setLikeSubmitting(true);
+    try {
+      const { liked } = await moviesApi.toggleLike(id);
+      const likedMovies = user.likedMovies || [];
+      useAuthStore.getState().setUser({
+        ...user,
+        likedMovies: liked
+          ? [...likedMovies, movie!]
+          : likedMovies.filter((item) => (typeof item === "string" ? item : item._id) !== movie!._id),
+      });
+      toast.success(liked ? "Added to liked movies" : "Removed from liked movies");
+    } catch (error) {
+      toast.error(errorMessage(error));
+    } finally {
+      setLikeSubmitting(false);
+    }
+  };
 
   const submitReview = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -209,6 +233,24 @@ function MovieDetails() {
           <p className="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">
             {movie.detail}
           </p>
+
+          {user ? (
+            <Button
+              type="button"
+              variant={isLiked ? "default" : "outline"}
+              className="mt-5 gap-2"
+              disabled={likeSubmitting}
+              onClick={toggleLike}
+              aria-pressed={isLiked}
+            >
+              <Heart className={isLiked ? "fill-current" : ""} size={16} />
+              {likeSubmitting ? "Saving..." : isLiked ? "Liked" : "Like movie"}
+            </Button>
+          ) : (
+            <p className="mt-5 text-sm text-slate-400">
+              <Link to="/login" className="text-blue-400 hover:underline">Sign in</Link> to like this movie.
+            </p>
+          )}
 
           {movie.cast.length > 0 && (
             <div className="mt-5">

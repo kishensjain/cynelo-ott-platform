@@ -13,6 +13,9 @@ export const moviesApi = {
   getOne: (id: string) =>
     api.get<Movie>(`/movies/specific-movie/${id}`).then((r) => r.data),
 
+  toggleLike: (id: string) =>
+    api.post<{ liked: boolean }>(`/movies/${id}/like`).then((r) => r.data),
+
   getNew: () => api.get<Movie[]>("/movies/new-movies").then((r) => r.data),
 
   getTop: () => api.get<Movie[]>("/movies/top-movies").then((r) => r.data),

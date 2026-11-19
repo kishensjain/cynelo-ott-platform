@@ -12,6 +12,7 @@ const serializeUser = (user: HydratedDocument<IUser>) => ({
   email: user.email,
   isAdmin: user.isAdmin,
   isSubscribed: user.isSubscribed,
+  likedMovies: "likedMovies" in user ? user.likedMovies : [],
 });
 
 export const createUser = asyncHandler(async (req, res) => {
@@ -80,7 +81,7 @@ export const getCurrentUserProfile = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Not authorized");
   }
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).populate("likedMovies");
   if (!user) {
     res.status(404);
     throw new Error("User not found");
@@ -110,7 +111,8 @@ export const updateCurrentUserProfile = asyncHandler(async (req, res) => {
   }
 
   const updatedUser = await user.save();
-  res.json(serializeUser(updatedUser));
+  const profile = await User.findById(updatedUser._id).populate("likedMovies");
+  res.json(serializeUser(profile!));
 });
 
 export const subscribeUser = asyncHandler(async (req, res) => {
@@ -125,7 +127,7 @@ export const subscribeUser = asyncHandler(async (req, res) => {
     req.user._id,
     { isSubscribed: true },
     { new: true },
-  );
+  ).populate("likedMovies");
 
   if (!user) {
     res.status(404);
@@ -145,7 +147,7 @@ export const unsubscribeUser = asyncHandler(async (req, res) => {
     req.user._id,
     { isSubscribed: false },
     { new: true },
-  );
+  ).populate("likedMovies");
 
   if (!user) {
     res.status(404);

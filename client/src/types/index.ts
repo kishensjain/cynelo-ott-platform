@@ -46,6 +46,7 @@ export interface User {
   email: string;
   isAdmin: boolean;
   isSubscribed: boolean;
+  likedMovies?: Array<Movie | string>;
 }
 
 export interface ApiError {

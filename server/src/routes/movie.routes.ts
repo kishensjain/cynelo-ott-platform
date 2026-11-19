@@ -13,6 +13,7 @@ import {
   getNewMovies,
   getTopMovies,
   getRandomMovies,
+  toggleMovieLike,
 } from "../controllers/movie.controller.js";
 
 import {
@@ -37,6 +38,7 @@ router.get(
 router.get("/new-movies", getNewMovies);
 router.get("/top-movies", getTopMovies);
 router.get("/random-movies", getRandomMovies);
+router.post("/:id/like", authenticate, checkId, toggleMovieLike);
 
 router.post(
   "/:id/reviews",

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import type { Types } from "mongoose";
 
 export interface IUser {
   username: string;
@@ -6,6 +7,7 @@ export interface IUser {
   password: string;
   isAdmin: boolean;
   isSubscribed: boolean;
+  likedMovies: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -41,6 +43,10 @@ const userSchema = new mongoose.Schema<IUser>(
       required: true,
       default: false,
     },
+    likedMovies: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Movie",
+    }],
   },
   {
     timestamps: true,

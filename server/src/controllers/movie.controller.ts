@@ -3,6 +3,7 @@ import Genre from "../models/genre.model.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import { Request } from "express";
 import cloudinary from "../config/cloudinary.js";
+import User from "../models/user.model.js";
 
 const normalizePagination = (req: Request) => {
   const page = Math.max(
@@ -149,6 +150,30 @@ export const getSpecificMovie = asyncHandler(async (req, res) => {
   }
 
   res.json(movie);
+});
+
+export const toggleMovieLike = asyncHandler(async (req, res) => {
+  const movieId = req.params.id;
+  const movieExists = await Movie.exists({ _id: movieId });
+  if (!movieExists) {
+    res.status(404);
+    throw new Error("Movie not found");
+  }
+
+  const user = await User.findById(req.user!._id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  const alreadyLiked = user.likedMovies.some((id) => id.toString() === movieId);
+  if (alreadyLiked) {
+    await User.updateOne({ _id: user._id }, { $pull: { likedMovies: movieId } });
+  } else {
+    await User.updateOne({ _id: user._id }, { $addToSet: { likedMovies: movieId } });
+  }
+
+  res.json({ liked: !alreadyLiked });
 });
 
 export const updateMovie = asyncHandler(async (req, res) => {
